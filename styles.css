@@ -1,0 +1,1821 @@
+/* ==========================================================================
+   PROJECT BOO — ELINE BEEK PORTFOLIO
+   Styles & Layout Guide
+   ========================================================================== */
+
+/* 
+  ---------------------------------------------------------------------------
+  CUSTOM FONT: MATCHA HOME
+  Playful, friendly rounded retro-display font provided in your folder!
+  ---------------------------------------------------------------------------
+*/
+@font-face {
+  font-family: 'Matcha Home';
+  src: url('Matcha Home.otf') format('opentype'),
+       url('Matcha Home.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  1. COLOR PALETTE (From Kleuren website.png)
+  Change these hex codes if you ever want to adjust your colors!
+  ---------------------------------------------------------------------------
+*/
+:root {
+  --c-sand: #e3d289;        /* Warm vintage parchment */
+  --c-crimson: #941914;     /* Folder 1: Graphic Design */
+  --c-amber: #ee8714;       /* Folder 2: Visual & Art */
+  --c-vermillion: #e03014;  /* Folder 3: Posters & Print */
+  --c-mahogany: #591210;    /* Deep mahogany maroon for notes & stamps */
+  --c-espresso: #190c0a;    /* Folder 4: About & main dark tone */
+
+  /* Paper & Surface Tones */
+  --desk-bg: #f4eee3;
+  --paper-white: #fdfbf7;
+  --paper-cream: #f5ece0;
+
+  /* Fonts */
+  --font-display: 'Matcha Home', 'Fraunces', cursive, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Space Grotesk', monospace, sans-serif;
+  --font-hand: 'Caveat', cursive, sans-serif;
+
+  /* Animation Timings (Springy and tactile) */
+  --ease-jump: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-float: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  2. BASE RESET & SCROLLING
+  ---------------------------------------------------------------------------
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--desk-bg);
+}
+
+body.scrollable-body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: var(--font-body);
+  background-color: var(--desk-bg);
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(227, 210, 137, 0.3) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(238, 135, 20, 0.18) 0%, transparent 50%),
+    linear-gradient(to right, rgba(25, 12, 10, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(25, 12, 10, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+  color: var(--c-espresso);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Locked when a folder or project modal is open */
+body.modal-open {
+  overflow: hidden !important;
+}
+
+/* Grain Overlay (gives the website a subtle tactile paper texture) */
+.desk-grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 99999;
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  3. HOME SCREEN & HEADER
+  ---------------------------------------------------------------------------
+*/
+.home-scroll-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease;
+}
+
+.home-scroll-container.is-hidden {
+  display: none;
+}
+
+/* 
+  NOTE: This controls the top header spacing and width.
+  - padding: 32px 36px 14px makes the top gap larger or smaller.
+  - max-width: 1360px sets how wide the header gets on large screens.
+*/
+.grid-header {
+  position: relative;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 32px 36px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 50;   /* was 10, nu hoger dan alle folders */
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  NOTE: This changes the font size of the main 'Project Boo' title!
+  - font-size: clamp(3.4rem, 8.5vw, 6.8rem) automatically scales with your screen.
+    Make the numbers smaller (e.g. 2.8rem, 6vw, 5rem) if you want a smaller title.
+*/
+.boo-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 8.5vw, 6.8rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--c-espresso);
+  text-shadow: 2.5px 2.5px 0px rgba(227, 210, 137, 0.7);
+  user-select: none;
+}
+
+/* 
+  NOTE: This changes your handwritten name 'Eline Beek' below the title.
+  - font-size: makes the handwriting bigger or smaller
+  - transform: rotate(-3deg) gives it that relaxed handwritten tilt
+*/
+.eline-handwriting {
+  font-family: var(--font-hand);
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 700;
+  color: var(--c-crimson);
+  transform: rotate(-3deg) translate(6px, -2px);
+  display: inline-block;
+  user-select: none;
+}
+
+.illustration-slot {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: -95px;
+  z-index: 2;
+}
+
+.illustration-slot img,
+.illustration-slot svg {
+  max-height: 300px;
+  width: auto;
+  transform: rotate(-2deg);
+  filter: drop-shadow(0 8px 16px rgba(25, 12, 10, 0.15));
+}
+
+.scroll-hint-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  padding-bottom: 8px;
+}
+
+.scroll-hint-arrow {
+  font-size: 1.6rem;
+  color: var(--c-crimson);
+  font-weight: 900;
+  animation: bounceDown 1.8s infinite ease-in-out;
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.scroll-hint-text {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--c-mahogany);
+  font-weight: 700;
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  4. SEAMLESS OVERLAPPING ANGLED FOLDERS (ZERO WHITE GAPS)
+  ---------------------------------------------------------------------------
+*/
+.angled-folders-viewport {
+  position: relative;
+  width: 100vw;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  NOTE: This controls each folder row.
+  - min-height: 220px controls how tall each folder is!
+    Make this smaller (e.g. 180px or 190px) if you want the folders to be less tall.
+*/
+.angled-folder-layer {
+  position: relative;
+  width: 100vw;
+  min-height: 220px;
+  cursor: pointer;
+  user-select: none;
+  /* Little spring jump on hover */
+  transition: transform 0.28s var(--ease-jump);
+  will-change: transform;
+}
+
+/* 
+  HOVER BUFFER ZONE:
+  This invisible buffer prevents mouse jitter / glitching when the folder jumps up!
+  Even when the folder shifts up by 8px, the cursor remains comfortably inside the hit area.
+*/
+.angled-folder-layer::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  bottom: -24px;
+  left: 0;
+  right: 0;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* 
+  NOTE: THIS CONTROLS HOW HIGH THE FOLDER JUMPS UP WHEN HOVERED!
+  - transform: translateY(-8px) makes the folder jump up 8px.
+    Change to -12px for a higher jump, or -5px for a subtle jump.
+*/
+.angled-folder-layer:hover,
+.angled-folder-layer.is-hovered {
+  transform: translateY(-8px);
+}
+
+/* 
+  NOTE: THIS OVERLAPS THE FOLDERS SO THERE ARE NO WHITE GAPS!
+  - margin-top: -65px pulls each folder up by 65px to overlap the folder above it.
+*/
+.angled-folder-layer.folder-1 { z-index: 10; }
+.angled-folder-layer.folder-2 { z-index: 20; margin-top: -65px; }
+.angled-folder-layer.folder-3 { z-index: 30; margin-top: -65px; }
+.angled-folder-layer.folder-4 { z-index: 40; margin-top: -65px; }
+
+/* 
+  FOLDER BODY LAYER:
+  Sits in front of the peeking papers (z-index: 5).
+  Has the color and the angled polygon clip.
+*/
+.folder-body-layer {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  padding: 8px 48px 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+}
+
+/* Folder 1: Crimson */
+.folder-1 .folder-body-layer {
+  background-color: var(--c-crimson);
+  clip-path: polygon(0 50px, 28% 50px, 30% 0, 48% 0, 50% 36px, 100% 0, 100% 100%, 0 100%);
+  box-shadow: 0 -6px 18px rgba(25, 12, 10, 0.16);
+}
+
+/* Folder 2: Amber */
+.folder-2 .folder-body-layer {
+  background-color: var(--c-amber);
+  clip-path: polygon(0 38px, 60% 38px, 62% 0, 80% 0, 82% 38px, 100% 38px, 100% 100%, 0 100%);
+  box-shadow: 0 -8px 22px rgba(25, 12, 10, 0.18);
+}
+
+/* Folder 3: Vermillion */
+.folder-3 .folder-body-layer {
+  background-color: var(--c-vermillion);
+  clip-path: polygon(0 38px, 40% 38px, 42% 0, 60% 0, 62% 38px, 100% 20px, 100% 100%, 0 100%);
+  box-shadow: 0 -10px 24px rgba(25, 12, 10, 0.22);
+}
+
+/* Folder 4: Espresso */
+.folder-4 .folder-body-layer {
+  background-color: var(--c-espresso);
+  clip-path: polygon(0 38px, 14% 38px, 16% 0, 32% 0, 34% 38px, 100% 38px, 100% 100%, 0 100%);
+  box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.3);
+}
+
+/* Tab labels inside the cutouts */
+.layer-tab-tag {
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.folder-1 .layer-tab-tag { color: #ffffff; margin-left: 31%; }
+.folder-2 .layer-tab-tag { color: var(--c-espresso); margin-left: 63%; }
+.folder-3 .layer-tab-tag { color: #ffffff; margin-left: 43%; }
+.folder-4 .layer-tab-tag { color: var(--c-sand); margin-left: 17%; }
+
+.tab-num {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.layer-summary-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.layer-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.24s var(--ease-jump);
+}
+
+/* Subtle, playful arrow that smoothly glides into view when hovering over the folder */
+.layer-heading::after {
+  content: '↗';
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  font-weight: 800;
+  opacity: 0;
+  transform: translate(-8px, 4px);
+  transition: opacity 0.22s ease, transform 0.24s var(--ease-jump);
+}
+
+.angled-folder-layer:hover .layer-heading::after,
+.angled-folder-layer.is-hovered .layer-heading::after {
+  opacity: 0.85;
+  transform: translate(0, 0);
+}
+
+.folder-1 .layer-heading { color: #ffffff; }
+.folder-2 .layer-heading { color: var(--c-espresso); }
+.folder-3 .layer-heading { color: #ffffff; }
+.folder-4 .layer-heading { color: var(--c-sand); }
+
+/* 
+  ---------------------------------------------------------------------------
+  5. PEEKING PROJECTS ON HOVER (Matches Hovering.png & Grid.png)
+  When you hover over a folder, the project papers slide up out of the pocket!
+  When you leave, they slide smoothly back inside.
+  ---------------------------------------------------------------------------
+*/
+.folder-peek-papers {
+  position: absolute;
+  display: flex;
+  gap: 14px;
+  pointer-events: none;
+  z-index: 2; /* Sits BEHIND .folder-body-layer (z-index: 5) */
+  /* Hidden tucked deep inside the folder pocket by default */
+  transform: translateY(48px);
+  opacity: 0;
+  transition: transform 0.36s var(--ease-jump), opacity 0.24s ease;
+  will-change: transform, opacity;
+}
+
+/* 
+  Alignment along each folder's slant & tabs (matching Grid.png & Hovering.png):
+  - Folder 1: Papers peek out along the rising top slant to the right of Tab #1
+  - Folder 2: Papers peek out along the flat top to the left of Tab #2
+  - Folder 3: Papers peek out along the top slant to the right of Tab #3
+  - Folder 4: Papers peek out along the top line to the right of Tab #4
+*/
+.folder-1 .folder-peek-papers { left: 52%; top: 4px; }
+.folder-2 .folder-peek-papers { left: 24%; top: 12px; }
+.folder-3 .folder-peek-papers { left: 63%; top: 8px; }
+.folder-4 .folder-peek-papers { left: 36%; top: 12px; }
+
+/* 
+  ON HOVER: PAPERS POP OUT OF THE FOLDER!
+  This pushes them UP by 38px so their top half emerges gracefully.
+  When mouse leaves, they smoothly slide back down inside.
+*/
+/* ---------- Altijd zichtbaar: 1 papiertje steekt al uit ---------- */
+
+/* De container is nu altijd zichtbaar, maar schuift standaard laag */
+.folder-peek-papers {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Papiertjes 2 en 3 zitten standaard verstopt in de map */
+.folder-peek-papers .peek-paper:not(.p1) {
+  transform: translateY(70px) rotate(0deg);
+  opacity: 0;
+  transition: transform 0.36s var(--ease-jump), opacity 0.24s ease;
+}
+
+/* Papiertje 1 steekt al uit */
+.folder-peek-papers .peek-paper.p1 {
+  transform: translateY(-56px) rotate(-3deg);
+}
+
+/* Bij hover springen ze alle drie omhoog */
+.angled-folder-layer:hover .folder-peek-papers,
+.angled-folder-layer.is-hovered .folder-peek-papers {
+  transform: translateY(-38px);
+}
+
+.angled-folder-layer:hover .peek-paper:not(.p1),
+.angled-folder-layer.is-hovered .peek-paper:not(.p1) {
+  opacity: 1;
+}
+
+.angled-folder-layer:hover .peek-paper.p2,
+.angled-folder-layer.is-hovered .peek-paper.p2 {
+  transform: rotate(0.5deg) translateY(-6px);
+}
+
+.angled-folder-layer:hover .peek-paper.p3,
+.angled-folder-layer.is-hovered .peek-paper.p3 {
+  transform: rotate(5deg) translateY(-3px);
+}
+.angled-folder-layer:hover .folder-peek-papers,
+.angled-folder-layer.is-hovered .folder-peek-papers {
+  transform: translateY(-38px);
+  opacity: 1;
+}
+
+/* 
+  THE PHYSICAL PAPER SHEET:
+  Tall sheet (95px) so its bottom half remains tucked deep inside behind 
+  the folder flap. No gaps, no detaching, no floating in mid-air!
+*/
+.peek-paper {
+  position: relative;
+  background-color: var(--paper-white);
+  height: 150px;
+  width: 190px;
+  padding: 6px;                 /* white "photo print" border around the image */
+  border-radius: 6px 6px 0 0;
+  border: 1px solid rgba(25, 12, 10, 0.14);
+  border-bottom: none;
+  box-shadow: 0 -4px 14px rgba(25, 12, 10, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform-origin: bottom center;
+  transition: transform 0.36s var(--ease-jump);
+}
+
+/* The project image fills the whole paper */
+.peek-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 3px 3px 0 0;
+  background-color: var(--paper-cream);
+}
+.peek-img--contain { object-fit: contain; }
+
+/* Small label sitting on top of the image */
+.peek-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  background: var(--paper-white);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(25, 12, 10, 0.18);
+  z-index: 2;
+}
+
+.peek-paper.p1 {
+  transform: rotate(-3deg);
+  transition-delay: 0.02s;
+}
+
+.peek-paper.p2 {
+  transform: rotate(1deg) translateY(-4px);
+  transition-delay: 0.05s;
+}
+
+.peek-paper.p3 {
+  transform: rotate(4.5deg);
+  transition-delay: 0.08s;
+}
+
+.peek-paper.p-about {
+  width: 240px;
+  transform: rotate(1deg);
+  transition-delay: 0.04s;
+}
+
+/* Lively organic fanning effect when the folder is hovered */
+.angled-folder-layer:hover .peek-paper.p1,
+.angled-folder-layer.is-hovered .peek-paper.p1 {
+  transform: rotate(-4.5deg) translateY(-2px);
+}
+
+.angled-folder-layer:hover .peek-paper.p2,
+.angled-folder-layer.is-hovered .peek-paper.p2 {
+  transform: rotate(0.5deg) translateY(-6px);
+}
+
+.angled-folder-layer:hover .peek-paper.p3,
+.angled-folder-layer.is-hovered .peek-paper.p3 {
+  transform: rotate(5deg) translateY(-3px);
+}
+
+.angled-folder-layer:hover .peek-paper.p-about,
+.angled-folder-layer.is-hovered .peek-paper.p-about {
+  transform: rotate(-1deg) translateY(-4px);
+}
+
+/* Paperclips on peeking papers */
+.peek-paperclip {
+  width: 7px;
+  height: 20px;
+  border-radius: 3.5px;
+  border: 2px solid;
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  z-index: 3;
+  background: transparent;
+}
+
+.peek-paperclip.brass { border-color: #d8a236; }
+.peek-paperclip.silver { border-color: #a8b2bc; }
+.peek-paperclip.green { border-color: #8bb55a; }
+
+.peek-badge {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-crimson);
+  line-height: 1;
+}
+
+.folder-2 .peek-badge {
+  color: var(--c-mahogany);
+}
+
+.peek-name {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--c-espresso);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  6. ARTISTIC AIRMAIL POSTCARD (CONTACT SECTION — NOT A SQUARE!)
+  ---------------------------------------------------------------------------
+*/
+.desk-postcard-section {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  margin: 70px auto 90px;
+  padding: 0 28px;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+}
+
+/* Washi tape strip holding the card */
+.washi-tape-strip {
+  position: absolute;
+  top: -16px;
+  left: 48%;
+  transform: translateX(-50%) rotate(-2.5deg);
+  width: 160px;
+  height: 36px;
+  background: rgba(238, 135, 20, 0.45);
+  border-left: 3px dashed rgba(25, 12, 10, 0.2);
+  border-right: 3px dashed rgba(25, 12, 10, 0.2);
+  backdrop-filter: blur(2px);
+  z-index: 60;
+  box-shadow: 0 2px 6px rgba(25, 12, 10, 0.1);
+}
+
+/* Postcard body (tilted, organic stationery feel) */
+.artistic-postcard {
+  position: relative;
+  width: 100%;
+  background-color: var(--paper-white);
+  border-radius: 8px;
+  padding: 44px 44px 36px;
+  transform: rotate(-1.5deg);
+  box-shadow: 
+    0 22px 45px rgba(25, 12, 10, 0.16),
+    0 4px 10px rgba(25, 12, 10, 0.08),
+    0 0 0 1px rgba(25, 12, 10, 0.08);
+  transition: transform 0.25s var(--ease-jump), box-shadow 0.25s ease;
+}
+
+.artistic-postcard:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 0 28px 55px rgba(25, 12, 10, 0.22);
+}
+
+/* Vintage Airmail Ribbon */
+.postcard-airmail-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  border-radius: 8px 8px 0 0;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--c-crimson) 0,
+    var(--c-crimson) 16px,
+    #ffffff 16px,
+    #ffffff 24px,
+    #2a5298 24px,
+    #2a5298 40px,
+    #ffffff 40px,
+    #ffffff 48px
+  );
+}
+
+.postit-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 40px;
+  max-width: 720px;
+  width: 100%;
+}
+
+.postit-note {
+  position: relative;
+  background: #ffe97a;
+  padding: 36px 30px 28px;
+  transform: rotate(-3deg);
+  box-shadow: 0 14px 24px rgba(25, 12, 10, 0.18);
+  /* kleine opgekrulde schaduw onderaan */
+  border-bottom-right-radius: 40px 8px;
+}
+
+.postit-tape {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+  width: 90px;
+  height: 26px;
+  background: rgba(238, 135, 20, 0.45);
+  border-left: 2px dashed rgba(25, 12, 10, 0.2);
+  border-right: 2px dashed rgba(25, 12, 10, 0.2);
+}
+
+.postit-text {
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1.35;
+  color: var(--c-espresso);
+}
+
+.postit-sign {
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--c-crimson);
+  margin-top: 10px;
+}
+
+.postit-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+  gap: 0;
+}
+
+.photo-stack {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  z-index: 1;               /* onder de post-it */
+  display: flex;
+  align-items: flex-start;
+}
+
+.photo-frame {
+  position: relative;
+  background: var(--paper-white);
+  padding: 10px 10px 34px;
+  box-shadow: 0 14px 24px rgba(25, 12, 10, 0.2);
+}
+
+.photo-frame img {
+  display: block;
+  width: 250px;
+  height: 320px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.pf-1 { transform: rotate(3deg); z-index: 1; }
+.pf-2 { transform: rotate(-4deg); margin-left: -50px; margin-top: 60px; z-index: 2; }
+
+@media (max-width: 700px) {
+  .postit-layout { grid-template-columns: 1fr; justify-items: center; }
+  .photo-stack { grid-column: 1; grid-row: 2; margin-top: -30px; }
+  .photo-frame img { width: 170px; height: 220px; }
+  .pf-2 { margin-top: 40px; margin-left: -30px; }
+}
+
+.contact-links {
+  grid-column: 1 / -1;
+  justify-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 32px;
+  margin-top: 28px;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-espresso);
+  text-decoration: none;
+  border-bottom: 3px solid var(--c-amber);
+  padding-bottom: 2px;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.contact-link:hover {
+  color: var(--c-crimson);
+  transform: translateY(-2px);
+}
+
+.contact-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.postit-insta:hover {
+  color: var(--c-crimson);
+}
+
+@media (max-width: 600px) {
+  .postit-layout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  7. VIEW 2: OPENED FOLDER SCREEN (Smooth Physical Unfolding)
+  ---------------------------------------------------------------------------
+*/
+.open-folder-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease-float);
+  overflow: hidden;
+  background-color: var(--desk-bg);
+}
+
+.open-folder-stage.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.open-stage-header {
+  width: 100%;
+  padding: 24px 36px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 120;
+}
+
+.open-stage-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.open-stage-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 400;
+  color: var(--c-espresso);
+}
+
+/* 
+  THIS IS THE [X] CLOSE BUTTON THAT CRUMPLES THE FOLDER:
+  - padding: makes the button bigger or smaller (e.g. 10px 22px)
+  - font-size: changes the text size of 'CLOSE'
+  - background-color: changes button background
+  - box-shadow: changes the retro chunky drop shadow (4px 4px)
+*/
+.crumple-close-btn {
+  position: relative;
+  z-index: 150;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background-color: var(--paper-white);
+  border: 2px solid var(--c-espresso);
+  border-radius: 8px;
+  color: var(--c-espresso);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--c-espresso);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  user-select: none;
+}
+
+/* When you hover your mouse over the [X] button */
+.crumple-close-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--c-espresso);
+  background-color: #fff;
+  color: var(--c-crimson);
+}
+
+/* When you click and press down on the [X] button */
+.crumple-close-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--c-espresso);
+}
+
+.crumple-x-icon {
+  font-size: 1.1rem;
+  font-weight: 900;
+  pointer-events: none; /* Mouse clicks pass directly to the button */
+}
+
+/* Scattered Arena with Silky Smooth Rise */
+.scattered-papers-arena {
+  position: relative;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 32px 140px;
+  perspective: 1200px;
+  z-index: 50;
+}
+
+.wireframe-paper-card {
+  position: relative;
+  width: min(340px, 30vw);
+  background-color: var(--paper-white);
+  border-radius: 8px;
+  padding: 22px 20px 18px;
+  box-shadow: 
+    0 20px 40px rgba(25, 12, 10, 0.16),
+    0 6px 12px rgba(25, 12, 10, 0.08),
+    0 0 0 1.5px rgba(25, 12, 10, 0.1);
+  cursor: pointer;
+  user-select: none;
+  margin: 0 -20px;
+  transition: transform 0.4s var(--ease-float), box-shadow 0.4s ease, z-index 0s;
+  will-change: transform;
+  animation: paperSlideSmoothRise 0.8s var(--ease-float) backwards;
+}
+
+.wireframe-paper-card:nth-child(1) {
+  --fan-rot: -5deg;
+  --fan-y: 16px;
+  z-index: 10;
+  animation-delay: 0.1s;
+  transform: translateY(var(--fan-y)) rotate(var(--fan-rot));
+}
+
+.wireframe-paper-card:nth-child(2) {
+  --fan-rot: 0.5deg;
+  --fan-y: -26px;
+  z-index: 20;
+  animation-delay: 0.22s;
+  transform: translateY(var(--fan-y)) rotate(var(--fan-rot));
+}
+
+.wireframe-paper-card:nth-child(3) {
+  --fan-rot: 6deg;
+  --fan-y: 18px;
+  z-index: 15;
+  animation-delay: 0.34s;
+  transform: translateY(var(--fan-y)) rotate(var(--fan-rot));
+}
+
+@keyframes paperSlideSmoothRise {
+  0% {
+    opacity: 0;
+    transform: translateY(320px) scale(0.65) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1.02) rotate(var(--fan-rot, 0deg));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(var(--fan-y, 0px)) scale(1) rotate(var(--fan-rot, 0deg));
+  }
+}
+
+.wireframe-paper-card:hover {
+  transform: translateY(-44px) rotate(0deg) scale(1.06) !important;
+  box-shadow: 
+    0 32px 50px rgba(25, 12, 10, 0.3),
+    0 10px 18px rgba(25, 12, 10, 0.12),
+    0 0 0 2px var(--c-espresso);
+  z-index: 70 !important;
+}
+
+.paper-number-badge {
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--c-crimson);
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.paper-inner-artwork {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--paper-cream);
+  border: 1.5px solid rgba(25, 12, 10, 0.1);
+  margin-bottom: 14px;
+}
+
+.paper-inner-artwork svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.paper-inner-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  color: var(--c-espresso);
+}
+
+.paper-inner-desc {
+  font-size: 0.85rem;
+  color: #4b3d3a;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.paper-click-hint {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--c-amber);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* =========================================================================
+   ABOUT ME: SINGLE EXPANSIVE SPREAD (Folder 4 Only)
+   Fills the screen generously with Eline's illustrated artwork & manifesto!
+   ========================================================================= */
+.about-me-expanded-sheet {
+  position: relative;
+  width: min(960px, 92vw);
+  max-width: 1000px;
+  min-height: 480px;
+  background-color: var(--paper-white);
+  border-radius: 12px;
+  padding: 38px 46px;
+  box-shadow: 
+    0 24px 55px rgba(25, 12, 10, 0.2),
+    0 6px 16px rgba(25, 12, 10, 0.08),
+    0 0 0 1.5px rgba(25, 12, 10, 0.1);
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 40px;
+  align-items: center;
+  z-index: 60;
+  user-select: text;
+  animation: paperSlideSmoothRise 0.8s var(--ease-float) backwards;
+  transform: rotate(-0.5deg);
+}
+
+.about-sheet-portrait-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-portrait-frame {
+  position: relative;
+  background-color: var(--paper-cream);
+  padding: 12px 12px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(25, 12, 10, 0.12);
+  box-shadow: 0 10px 24px rgba(25, 12, 10, 0.14);
+  transform: rotate(-2deg);
+  width: 100%;
+  max-width: 270px;
+}
+
+.about-paperclip {
+  position: absolute;
+  top: -14px;
+  right: 28px;
+  width: 10px;
+  height: 32px;
+  border-radius: 5px;
+  border: 2.5px solid #d8a236;
+  z-index: 10;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.15);
+}
+
+.about-washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 35%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 70px;
+  height: 20px;
+  background: rgba(238, 135, 20, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 8;
+  border-left: 2px dashed rgba(25, 12, 10, 0.15);
+  border-right: 2px dashed rgba(25, 12, 10, 0.15);
+}
+
+.about-portrait-img {
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  display: block;
+  background-color: #faf5ee;
+  border-radius: 4px;
+}
+
+.about-portrait-caption {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.caption-name {
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--c-crimson);
+  line-height: 1.1;
+}
+
+.caption-loc {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #7a6865;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.about-sheet-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-sheet-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.about-folder-badge {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffffff;
+  background-color: var(--c-espresso);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+
+.about-stamp-badge {
+  border: 1.5px solid var(--c-amber);
+  color: var(--c-amber);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 3px;
+  transform: rotate(-2deg);
+}
+
+.about-status-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #2b7a4b;
+  background-color: rgba(43, 122, 75, 0.1);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.about-sheet-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--c-espresso);
+}
+
+.about-sheet-bio {
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: #3f312f;
+}
+
+.about-sheet-focus-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-block-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--c-mahogany);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-focus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.focus-pill {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  background-color: var(--paper-cream);
+  color: var(--c-espresso);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(25, 12, 10, 0.1);
+}
+
+.about-sheet-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.about-to-postcard-btn {
+  background-color: var(--c-crimson);
+  color: #ffffff;
+  border: 2px solid var(--c-espresso);
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--c-espresso);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.about-to-postcard-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--c-espresso);
+  background-color: var(--c-vermillion);
+}
+
+.about-direct-email {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--c-espresso);
+}
+
+@media (max-width: 860px) {
+  .about-me-expanded-sheet {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px 20px;
+    max-height: 65vh;
+    overflow-y: auto;
+  }
+  .about-portrait-frame {
+    max-width: 220px;
+  }
+  .about-portrait-img {
+    height: 180px;
+  }
+}
+
+/* Bottom Folder Pocket */
+.bottom-folder-pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 165px;
+  background-color: var(--c-crimson);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -12px 35px rgba(25, 12, 10, 0.28);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease, transform 0.45s var(--ease-float);
+  animation: folderPocketSlideUp 0.6s var(--ease-float) backwards;
+}
+
+@keyframes folderPocketSlideUp {
+  0% { transform: translateY(165px); }
+  100% { transform: translateY(0); }
+}
+
+.bottom-pocket-tab {
+  position: absolute;
+  top: -38px;
+  left: 8%;
+  padding: 8px 32px 6px;
+  background-color: inherit;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 -4px 10px rgba(25, 12, 10, 0.15);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bottom-folder-content {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 36px;
+  border-top: 2px solid rgba(255, 255, 255, 0.25);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.folder-handwritten-note-area {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.note-scribble-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 3px 10px;
+  border-radius: 4px;
+  color: inherit;
+}
+
+.folder-artist-note {
+  font-family: var(--font-hand);
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: inherit;
+  max-width: 920px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  8. THE PAPER CRUMPLE ANIMATION (On [X] Click)
+  Scrunches and crumples the folder & papers into a discarded paper ball!
+  ---------------------------------------------------------------------------
+*/
+.open-folder-stage.is-crumpling {
+  pointer-events: none;
+}
+
+.open-folder-stage.is-crumpling .scattered-papers-arena {
+  animation: arenaCrumpleCrunch 0.72s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+.open-folder-stage.is-crumpling .wireframe-paper-card {
+  animation: paperCrumpleWad 0.72s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+}
+
+.open-folder-stage.is-crumpling .about-me-expanded-sheet {
+  animation: paperCrumpleWad 0.72s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+}
+
+.open-folder-stage.is-crumpling .bottom-folder-pocket {
+  animation: folderCrumpleCrunch 0.72s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+@keyframes arenaCrumpleCrunch {
+  0% { transform: scale(1) rotate(0deg); }
+  35% {
+    transform: scale(0.85) rotate(4deg) skew(8deg, -4deg);
+    filter: contrast(1.3) drop-shadow(0 0 12px rgba(25, 12, 10, 0.3));
+  }
+  65% {
+    transform: scale(0.35) rotate(-35deg) skew(-15deg, 10deg);
+    filter: contrast(1.7) drop-shadow(0 15px 30px rgba(25, 12, 10, 0.5));
+  }
+  85% { transform: scale(0.12) rotate(180deg); opacity: 0.9; }
+  100% { transform: scale(0.05) translateY(700px) rotate(260deg); opacity: 0; }
+}
+
+@keyframes paperCrumpleWad {
+  0% {
+    transform: translateY(var(--fan-y, 0)) rotate(var(--fan-rot, 0)) scale(1);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  30% {
+    transform: scale(0.8) rotate(calc(var(--fan-rot) * -2)) translate(10px, -20px);
+    clip-path: polygon(5% 2%, 92% 8%, 98% 85%, 8% 95%);
+    box-shadow: inset 0 0 25px rgba(25, 12, 10, 0.4), 0 10px 20px rgba(0,0,0,0.3);
+  }
+  60% {
+    transform: scale(0.4) rotate(90deg) translate(-20px, 30px);
+    clip-path: polygon(15% 10%, 80% 5%, 90% 90%, 10% 80%);
+    box-shadow: inset 0 0 45px rgba(25, 12, 10, 0.7);
+  }
+  100% {
+    transform: scale(0.08) rotate(240deg) translateY(400px);
+    clip-path: polygon(25% 20%, 70% 15%, 85% 75%, 20% 70%);
+    opacity: 0;
+  }
+}
+
+@keyframes folderCrumpleCrunch {
+  0% { transform: translateY(0) scale(1); }
+  40% {
+    transform: translateY(20px) scale(0.85) skewX(10deg);
+    clip-path: polygon(0 15%, 100% 5%, 95% 100%, 5% 100%);
+  }
+  75% { transform: translateY(60px) scale(0.4) rotate(15deg); opacity: 0.7; }
+  100% { transform: translateY(250px) scale(0.1) rotate(45deg); opacity: 0; }
+}
+
+
+/* 
+  ---------------------------------------------------------------------------
+  9. PROJECT DOSSIER MODAL
+  ---------------------------------------------------------------------------
+*/
+.project-dossier-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.project-dossier-modal.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(25, 12, 10, 0.65);
+  backdrop-filter: blur(6px);
+}
+
+.modal-dossier-card {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  max-height: 88vh;
+  background-color: var(--paper-white);
+  border-radius: 12px;
+  box-shadow: 0 32px 60px rgba(25, 12, 10, 0.4);
+  z-index: 2;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.3s var(--ease-jump);
+}
+
+.project-dossier-modal.is-active .modal-dossier-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-paperclip {
+  position: absolute;
+  top: -14px;
+  left: 40px;
+  width: 20px;
+  height: 52px;
+  border-radius: 10px;
+  border: 3.5px solid #d8a236;
+  z-index: 20;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--paper-cream);
+  border: 1.5px solid var(--c-espresso);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 2px 2px 0 var(--c-espresso);
+}
+
+.modal-close-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--c-espresso);
+}
+
+.modal-inner-scroll {
+  padding: 40px 40px 36px;
+  overflow-y: auto;
+  max-height: 88vh;
+}
+
+.modal-dossier-header {
+  margin-bottom: 24px;
+  border-bottom: 1.5px dashed rgba(25, 12, 10, 0.15);
+  padding-bottom: 16px;
+}
+
+.modal-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.modal-folder-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  background-color: var(--c-crimson);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.modal-year {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #6d5b59;
+}
+
+.modal-stamp-badge {
+  border: 1.5px solid var(--c-amber);
+  color: var(--c-amber);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+  transform: rotate(-3deg);
+}
+
+.modal-project-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 400;
+  color: var(--c-espresso);
+}
+
+.modal-project-category {
+  font-size: 1rem;
+  color: var(--c-amber);
+  font-weight: 600;
+}
+
+.modal-content-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .modal-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-artwork-container {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--paper-cream);
+  border: 1px solid rgba(25, 12, 10, 0.12);
+}
+
+.modal-artwork-container svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.modal-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-heading {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--c-mahogany);
+  margin-bottom: 6px;
+}
+
+.info-text {
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.info-specs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-specs-list li {
+  font-size: 0.88rem;
+  position: relative;
+  padding-left: 16px;
+}
+
+.info-specs-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--c-vermillion);
+}
+
+.modal-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.modal-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  background-color: var(--paper-cream);
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(25, 12, 10, 0.1);
+}
+
+/* Toast */
+.copy-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  background-color: var(--c-espresso);
+  color: var(--c-sand);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(25, 12, 10, 0.3);
+  z-index: 100000;
+  opacity: 0;
+  transition: transform 0.28s var(--ease-jump), opacity 0.28s ease;
+  pointer-events: none;
+}
+
+.copy-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* 
+  ---------------------------------------------------------------------------
+  RESPONSIVE RULES FOR PEEKING PAPERS & POSTCARD
+  ---------------------------------------------------------------------------
+*/
+@media (max-width: 900px) {
+  .folder-1 .folder-peek-papers { left: 45%; }
+  .folder-2 .folder-peek-papers { left: 16%; }
+  .folder-3 .folder-peek-papers { left: 52%; }
+  .folder-4 .folder-peek-papers { left: 26%; }
+  .peek-paper {
+    width: 150px;
+    height: 120px;
+    padding: 5px;
+  }
+  .peek-paper.p-about { width: 190px; }
+  .peek-name {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .folder-peek-papers {
+    gap: 8px;
+  }
+  .peek-paper.p3 {
+    display: none; /* Keep the top 2 projects visible on small mobile screens */
+  }
+  .peek-paper {
+    width: 120px;
+    height: 100px;
+    padding: 4px;
+  }
+  .peek-paper.p-about { width: 150px; }
+  .peek-badge {
+    font-size: 1rem;
+  }
+}
+
+
+/* ---------- Project carousel (popup) ---------- */
+.modal-artwork-container { position: relative; }
+.carousel { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.carousel-track { display: flex; height: 100%; transition: transform 0.45s var(--ease-float); }
+.carousel-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-cream);
+}
+.carousel-slide img,
+.carousel-slide svg { width: 100%; height: 100%; display: block; }
+.carousel-slide img { object-fit: contain; }
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--c-espresso);
+  background: var(--paper-white);
+  color: var(--c-espresso);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--c-espresso);
+  z-index: 5;
+}
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+.carousel-btn:hover { background: var(--c-sand); }
+
+.carousel-footer {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 14px 10px;
+  background: linear-gradient(to top, rgba(25, 12, 10, 0.55), transparent);
+  z-index: 4;
+  pointer-events: none;
+}
+.carousel-footer .carousel-dots { pointer-events: auto; }
+.carousel-caption {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+.carousel-dots { display: flex; gap: 7px; }
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+.carousel-dot.active { background: #fff; transform: scale(1.25); }
+
+/* Hide the badge / year / stamp row in the project popup */
+.modal-meta-row { display: none; }
+
+
+/* Label on peeking papers: long titles get cut off neatly */
+.peek-label { max-width: calc(100% - 24px); }
+.peek-name { overflow: hidden; text-overflow: ellipsis; }
+
+/* Opened folder with only 1 or 2 projects: keep the cards centered */
+.wireframe-paper-card:only-child {
+  --fan-rot: -1.5deg;
+  --fan-y: 0px;
+  transform: translateY(0) rotate(-1.5deg);
+}
+
+/* Real project photos used as cover (card in the folder + popup) */
+.project-photo { width: 100%; height: 100%; object-fit: cover; display: block; }

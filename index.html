@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Boo — Eline Beek</title>
+  
+  <!-- 
+    GOOGLE FONTS:
+    - Fraunces: Retro-modern groovy display font for titles
+    - Caveat: Marker handwriting for playful studio notes
+    - Plus Jakarta Sans: Clean body text
+    - Space Grotesk: Monospace-style tech/print accents
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="scrollable-body"> 
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sparkle" viewBox="0 0 24 24">
+    <path d="M12 2.5C12.6 7.5 14.5 10.4 21.5 12C14.6 13.4 12.8 16.5 12.2 21.6C11.2 16.4 9.4 13.6 2.4 11.8C9.5 10.6 11.4 7.6 12 2.5Z"
+          fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+  
+
+  <!-- Subtle physical paper grain texture overlay -->
+  <div class="desk-grain-overlay" aria-hidden="true"></div>
+
+  <!-- =========================================================================
+       VIEW 1: HOME PAGE (Scrollable, Seamless Overlapping Folders)
+       ========================================================================= -->
+  <div class="home-scroll-container" id="homeScreenView">
+    
+    <!-- =======================================================================
+         HEADER SECTION:
+         NOTE: This is the top part of your site.
+         - Change 'Project Boo' or 'Eline Beek' here.
+         ======================================================================= -->
+    <header class="grid-header">
+      <div class="header-titles">
+        <!-- NOTE: This is your main website title -->
+        <h1 class="boo-title">Project Boo</h1>
+        <!-- NOTE: This is your handwritten signature subtitle -->
+        <span class="eline-handwriting">Eline Beek</span>
+      </div>
+
+      <!-- 
+        NOTE: Your custom illustration of yourself!
+      -->
+      <div class="illustration-slot" id="illustrationSlot">
+        <img src="images/eline_art.png" alt="Illustratie van Eline" class="header-ik-illustration"> 
+      </div>
+
+      
+    </header>
+
+    <!-- 
+      FOLDERS VIEWPORT:
+      Four seamless, overlapping angled folders with zero white gaps.
+      When you hover over a folder, it does a small jump and the project papers
+      slide UP from inside the folder.
+    -->
+    <div class="angled-folders-viewport" id="angledFoldersViewport">
+      
+      <!-- =====================================================================
+           FOLDER 1: GRAPHIC DESIGN (Color: Crimson #941914)
+           ===================================================================== -->
+      <div class="angled-folder-layer folder-1" data-folder-id="graphic" role="button" tabindex="0" aria-label="Open Graphic Design Folder">
+        
+        <!-- PEEKING PAPERS: These stick out of the folder on hover! -->
+        <div class="folder-peek-papers" aria-hidden="true">
+          <!-- Papers are built automatically from projects-data.js -->
+        </div>
+
+
+        <!-- FOLDER BODY: Sits in front of the peeking papers -->
+        <div class="folder-body-layer">
+          <div class="layer-tab-tag">
+            <span class="tab-num">#1</span>
+            <span class="tab-text">GRAPHIC</span>
+          </div>
+          <div class="layer-summary-info">
+            <h2 class="layer-heading">Graphic Design</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           FOLDER 2: VISUAL & ART (Color: Amber Orange #ee8714)
+           ===================================================================== -->
+      <div class="angled-folder-layer folder-2" data-folder-id="visual" role="button" tabindex="0" aria-label="Open Visual & Art Folder">
+        
+        <!-- PEEKING PAPERS: Stick out on hover -->
+        <div class="folder-peek-papers" aria-hidden="true">
+          <!-- Papers are built automatically from projects-data.js -->
+        </div>
+
+
+        <!-- FOLDER BODY -->
+        <div class="folder-body-layer">
+          <div class="layer-tab-tag">
+            <span class="tab-num">#2</span>
+            <span class="tab-text">VISUAL</span>
+          </div>
+          <div class="layer-summary-info">
+            <h2 class="layer-heading">Visual &amp; Art</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           FOLDER 3: CRITICAL DESIGN (Color: Vermillion Red-Orange #e03014)
+           ===================================================================== -->
+      <div class="angled-folder-layer folder-3" data-folder-id="posters" role="button" tabindex="0" aria-label="Open Critical Design Folder">
+        
+        <!-- PEEKING PAPERS: Stick out on hover -->
+        <div class="folder-peek-papers" aria-hidden="true">
+          <!-- Papers are built automatically from projects-data.js -->
+        </div>
+
+
+        <!-- FOLDER BODY -->
+        <div class="folder-body-layer">
+          <div class="layer-tab-tag">
+            <span class="tab-num">#3</span>
+            <span class="tab-text">CRITICAL</span>
+          </div>
+          <div class="layer-summary-info">
+            <h2 class="layer-heading">Critical Design</h2>
+          </div>
+        </div>
+      </div>
+
+      
+
+
+    </div>
+
+    <!-- =======================================================================
+     CONTACT SECTION: post-it, foto en Instagram
+     ======================================================================= -->
+<section class="desk-postcard-section" id="contactSection">
+
+  <div class="postit-layout">
+
+    <!-- Post-it -->
+    <div class="postit-note">
+      <div class="postit-tape" aria-hidden="true"></div>
+      <p class="postit-text">
+        Hi, I'm Eline! I'm a designer who approaches every project through my own view of the world.
+        A funny or attention-grabbing design (one that REALLY grabs attention) is never an obstacle for me, it's a challenge.
+        Colorful, stylish, with a direct message: those are my favorite design words!
+      </p>
+      <p class="postit-sign">– Eline</p>
+    </div>
+
+    <!-- Foto, valt onder de post-it -->
+   <div class="photo-stack">
+  <div class="photo-frame pf-1">
+    <img src="images/images:eline_foto.jpg" alt="Photo of Eline">
+  </div>
+  <div class="photo-frame pf-2">
+    <img src="images/images:fotovanmij2.png" alt="Another photo of Eline">
+  </div>
+</div>
+
+   <div class="contact-links">
+  <a class="contact-link" href="https://instagram.com/projectboo.studio" target="_blank" rel="noopener">
+    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <circle cx="12" cy="12" r="4"></circle>
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+    </svg>
+    @projectboo.studio
+  </a>
+
+  <a class="contact-link" href="mailto:beekeline@gmail.com">
+    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+      <path d="M3 7l9 6 9-6"></path>
+    </svg>
+    beekeline@gmail.com
+  </a>
+</div>
+
+  </div>
+</section>
+
+
+  </div>
+</section>
+</div>
+
+  <!-- =========================================================================
+       VIEW 2: OPENED FOLDER SCREEN (Smooth Physical Unfolding)
+       - Folder drops to the BOTTOM of the screen
+       - Projects (#1, #2, #3) rise out smoothly
+       - Handwritten personal notes on graphic design / school projects on folder
+       - [X] button to crumble everything like discarded paper
+       ========================================================================= -->
+  <!-- =========================================================================
+       VIEW 2: OPENED FOLDER SCREEN (Smooth Physical Unfolding)
+       - Folder drops to the BOTTOM of the screen as an open pocket
+       - Projects (#1, #2, #3) rise out smoothly like scattered papers
+       - Handwritten personal notes on graphic design / school projects on folder face
+       - [X] button to crumble everything like discarded paper and return to desk
+       ========================================================================= -->
+  <section class="open-folder-stage" id="openFolderStage" aria-hidden="true">
+    
+    <!-- Top Bar with Category & Close [X] Button -->
+    <div class="open-stage-header">
+      <div class="open-stage-title-wrap">
+        <h2 class="open-stage-heading" id="openStageTitle">Graphic Design</h2>
+      </div>
+
+      <!-- 
+        NOTE: THIS IS THE [X] CLOSE BUTTON!
+        Clicking this button crumbles and folds the papers into a paper ball,
+        then returns you back to the desk. You can also press ESC on your keyboard.
+      -->
+      <button class="crumple-close-btn" id="crumpleCloseBtn" title="Crumple folder and return to desk" aria-label="Close and crumple folder">
+        <span class="crumple-btn-label">CLOSE</span>
+        <span class="crumple-x-icon">✕</span>
+      </button>
+    </div>
+
+    <!-- 
+      NOTE: THIS IS THE SCATTERED PAPERS ARENA!
+      Your 3 projects appear here as physical sheets of paper with artwork and descriptions.
+      Clicking any project paper opens up its full dossier modal with details and specs.
+    -->
+    <div class="scattered-papers-arena" id="scatteredPapersArena">
+      <!-- Project cards are placed here dynamically from projects-data.js -->
+    </div>
+
+    <!-- 
+      NOTE: THIS IS THE OPEN FOLDER AT THE BOTTOM OF THE SCREEN!
+      Has your handwritten notes about your school projects, graphic design, and artistic process.
+    -->
+    <div class="bottom-folder-pocket" id="bottomFolderPocket">
+      <div class="bottom-pocket-tab" id="bottomPocketTab">
+        <span id="bottomPocketTabLabel">#1 GRAPHIC</span>
+      </div>
+
+      <!-- Personal Artist & School Note handwritten directly on the folder face -->
+      <div class="bottom-folder-content">
+        <div class="folder-handwritten-note-area">
+          <span class="note-scribble-label">Eline says:</span>
+          <p class="folder-artist-note" id="folderArtistNote">
+            <!-- Dynamic note explaining graphic design / school projects -->
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PROJECT DOSSIER MODAL
+       Opens when clicking any paper card to inspect detailed artwork & specs
+       ========================================================================= -->
+  <div class="project-dossier-modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-dossier-card" id="modalDossierCard">
+      
+      <div class="modal-paperclip" id="modalPaperclip"></div>
+      
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dossier">
+        ✕
+      </button>
+
+      <div class="modal-inner-scroll">
+        <div class="modal-dossier-header">
+          <div class="modal-meta-row">
+            <span class="modal-folder-badge" id="modalFolderBadge">#1 GRAPHIC</span>
+            <span class="modal-year" id="modalYear">2024</span>
+            <span class="modal-stamp-badge" id="modalStampBadge">FEATURED</span>
+          </div>
+          <h2 class="modal-project-title" id="modalProjectTitle">Project Title</h2>
+          <p class="modal-project-category" id="modalProjectCategory">Category • Medium</p>
+        </div>
+
+        <div class="modal-content-grid">
+          <div class="modal-artwork-container" id="modalArtworkContainer">
+            <!-- Dynamic SVG artwork -->
+          </div>
+
+          <div class="modal-info-panel">
+            <div class="info-block">
+              <h3 class="info-heading">Concept &amp; Process</h3>
+              <p class="info-text" id="modalProjectDesc">Description</p>
+            </div>
+
+            <div class="info-block">
+              <h3 class="info-heading">Materials &amp; Production</h3>
+              <ul class="info-specs-list" id="modalProjectSpecs"></ul>
+            </div>
+
+            <div class="info-block">
+              <h3 class="info-heading">Design Tags</h3>
+              <div class="modal-tags-wrap" id="modalProjectTags"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification for email copy -->
+  <div class="copy-toast" id="copyToast">Email copied to clipboard!</div>
+
+  <!-- Scripts -->
+  <script src="projects-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
